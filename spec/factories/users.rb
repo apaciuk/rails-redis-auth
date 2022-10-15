@@ -8,6 +8,8 @@
 #  email           :string
 #  name            :string
 #  password_digest :string
+#  role            :integer          default("user")
+#  status          :integer          default("inactive")
 #  username        :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -21,5 +23,6 @@ FactoryBot.define do
     username { Faker::Internet.email.split('@').first }
     password { Faker::Internet.password }
     password_confirmation { password }
+    role { :user }
   end
 end

@@ -6,7 +6,7 @@ class AuthenticationController < ApplicationController
   def authenticate
     user = User.find_by(username: params[:username])
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
+      session[:user_id] = user.id # uuid
       token = session.id
       render json: { token: token, user: user }
     else

@@ -1,6 +1,6 @@
 # redis-auth
 
-Rails 7 API starter with Bcrypted user model, UUID's and configured with Redis user session storage, RSpec testing.
+Rails 7 API starter with Bcrypted user model, UUID's and configured with Redis user registration & session storage, RSpec testing.
 
 #### Curl cmds (& Postman form-data or raw json)
 
@@ -10,7 +10,7 @@ curl -XPOST -H "Content-Type: application/json" -d '{ "name": "random", "email":
 
 ##### Response:
 
-{"id":"a6eb776c-67c3-4d71-947d-0917f1d31941","name":"random","username":"randomuser","email":"randomuser@email.com","password_digest":"$2a$12$MMtQ.WTu7g2MSQzfADXm3u7ANrwpQwJA6v3sye29TpLF8./Tu4gWi","created_at":"2022-10-14T18:04:13.453Z","updated_at":"2022-10-14T18:04:13.453Z"}
+{"id":"89107f80-856d-4561-887e-63079e7ca26f","name":"random","username":"randomuser","email":"randomuser@email.com","password_digest":"$2a$12$5GYMEA/KD.ta96g9vJKX1OehxZB.FFZzcCUpFcN9w3wXsVttCoF2e","role":"user","status":"inactive","created_at":"2022-10-15T13:47:55.685Z","updated_at":"2022-10-15T13:47:55.685Z"}
 
 ### Login user
 
@@ -27,15 +27,15 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Content-Type: application/json; charset=utf-8
 Vary: Accept
-Set-Cookie: redis_session=bQOjFR%2BJ0FNznmu%2FYBAaEalROOPpKvkwqgwBUX7i4QPjLPpulIJh7aaAf60ueKrFFmBLZPDHTBd1IEn6bFaSz92OPh7x4duC8WjB1IpcLmTn7wOvoSBxW3Jxzo4RBVUgd%2FfLtfTXmD2xA%2FMpiNmrPSEMb3w%2FUU7IyJBdB1ZdEq72%2BeNceEJHwrMw8PZNMJQ2N2eSBgdXLhNpRekz9mFNYUk0B7NrlB4Ve%2BY57gLOfUW8X4zR1qk7nN0aBGhewDjgc8FWjcM%3D--IZs5ktReFMDtqp9R--cddfPzNHdJTPWtSKBAcCBw%3D%3D; path=/; HttpOnly; SameSite=Lax
-ETag: W/"03e077255a5e9c3051cb05eba60fb16e"
+Set-Cookie: redis_session=v597fQ7U1E5CA3ismuZRWyRxElxooQVJyfI90QMax1cK2qThJdOLXKHOVo%2Bt8wDIV4wwtfAjYWDZCBn3qbF5HS%2BJyUkPGQLLWi0BsSgcLfB721Pl7b7yqIeA4chb5W2%2FKM%2BKrNDrVSsXTMSQTCkqQPRB06lmP4fMEiTUjN1GA6WrTim1srUe0azw4%2F08KYWtaBEvRkfLyjd3nHXGreStQUoU%2BHSBWfl7TRA9uj1LiBJht7R%2BQ4cSh1Vx5msFz92nYabjzJU%3D--e8SnQzpjKoisU3JS--ijj0cwHTXK8J4TtIKSfmUw%3D%3D; path=/; HttpOnly; SameSite=Lax
+ETag: W/"6c788ec3385ab1d87e3a35b4856bcba2"
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: d829b49b-38d7-41cc-a35c-ff078ae1f923
-X-Runtime: 0.222001
-Server-Timing: start_processing.action_controller;dur=0.15, sql.active_record;dur=1.08, instantiation.active_record;dur=0.10, process_action.action_controller;dur=217.77
+X-Request-Id: 39eed6bb-a47e-4617-891d-fbef514f323d
+X-Runtime: 0.243467
+Server-Timing: start_processing.action_controller;dur=0.31, sql.active_record;dur=1.21, instantiation.active_record;dur=0.12, process_action.action_controller;dur=216.68
 Transfer-Encoding: chunked
 
-{"token":{"public_id":"f2a3a360fd177ea25bc48a891989d51d"},"user":{"id":"a6eb776c-67c3-4d71-947d-0917f1d31941","name":"random","username":"randomuser","email":"randomuser@email.com","password_digest":"$2a$12$MMtQ.WTu7g2MSQzfADXm3u7ANrwpQwJA6v3sye29TpLF8./Tu4gWi","created_at":"2022-10-14T18:04:13.453Z","updated_at":"2022-10-14T18:04:13.453Z"}}
+{"token":{"public_id":"1fbedd62f5bb8ca8cfe0a673ba5bc8d1"},"user":{"id":"89107f80-856d-4561-887e-63079e7ca26f","name":"random","username":"randomuser","email":"randomuser@email.com","password_digest":"$2a$12$5GYMEA/KD.ta96g9vJKX1OehxZB.FFZ
 
 #### Routes
 
@@ -58,21 +58,21 @@ Redis, main config preset in application.rb, with a redis-namespace initializer 
   2.7.0 (Rails 7)
 
 - bundle install
-- db create, migrate
+- db create, migrate, seed (optional)
 
 rails s
 
 Try curl or Rest Client requests above,
 
-- Params (no require user hash)
+- Params (not require user hash)
 
 Register/create - name, email, password
 Login - username, password
 
 - Controllers user, and authentication for logins/sessions
-- Models, 1 User only
+- Models, 1 User only, and example Message model
 - Testing, RSpec w FactoryBot
 
 ### RSpec
 
-Basic tests only on User and login request.
+Basic tests only on User and login request + Message

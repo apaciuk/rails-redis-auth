@@ -8,6 +8,8 @@
 #  email           :string
 #  name            :string
 #  password_digest :string
+#  role            :integer          default("user")
+#  status          :integer          default("inactive")
 #  username        :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -41,6 +43,13 @@ RSpec.describe User, type: :model do
       user.save
       user2 = build(:user, email: User.first.email)
       expect(user2).to_not be_valid
+    end
+  end
+
+  describe 'associations' do
+    it 'has many messages' do
+      assc = described_class.reflect_on_association(:messages)
+      expect(assc.macro).to eq :has_many
     end
   end
 end

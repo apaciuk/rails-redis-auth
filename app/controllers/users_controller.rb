@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  # skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
   before_action :set_user, only: %i[show update destroy]
   respond_to? :json
 
@@ -15,6 +14,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    # session[:user_id] = @user.id
     if @user.save
       render json: @user, status: :created
     else
